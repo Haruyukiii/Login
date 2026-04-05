@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Mobility Hubs — Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --sky:#0284C7;--sky-d:#0369A1;--sky-l:#E0F2FE;--sky-xl:#F0F9FF;
+  --slate:#0F172A;--slate-m:#334155;--slate-s:#64748B;--slate-x:#E2E8F0;
+  --white:#fff;--green:#10B981;--amber:#F59E0B;--red:#EF4444;
+}
+html,body{height:100%;font-family:'DM Sans',sans-serif;}
+body{
+  min-height:100vh;
+  background: linear-gradient(135deg,#0C4A6E 0%,#0369A1 40%,#0284C7 70%,#38BDF8 100%);
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  position:relative;overflow:hidden;
+}
+
+/* animated bg circles */
+body::before,body::after{
+  content:'';position:fixed;border-radius:50%;
+  background:rgba(255,255,255,0.04);pointer-events:none;
+}
+body::before{width:600px;height:600px;top:-200px;right:-150px;animation:float1 8s ease-in-out infinite;}
+body::after{width:400px;height:400px;bottom:-120px;left:-100px;animation:float2 10s ease-in-out infinite;}
+@keyframes float1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-20px,20px) scale(1.05);}}
+@keyframes float2{0%,100%{transform:translate(0,0);}50%{transform:translate(15px,-15px);}}
+
+.orb{position:fixed;border-radius:50%;pointer-events:none;background:rgba(255,255,255,0.03);}
+.orb1{width:300px;height:300px;top:10%;left:5%;animation:float2 12s infinite;}
+.orb2{width:200px;height:200px;bottom:20%;right:10%;animation:float1 9s infinite;}
+
+/* card */
+.card{
+  background:rgba(255,255,255,0.97);
+  border-radius:24px;
+  width:100%;max-width:480px;
+  padding:44px 40px 36px;
+  box-shadow:0 32px 80px rgba(0,0,0,0.22),0 0 0 1px rgba(255,255,255,0.3);
+  animation:slideUp 0.5s cubic-bezier(.22,.68,0,1.2);
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+.logo{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+.logo-icon{
+  width:48px;height:48px;
+  background:linear-gradient(135deg,var(--sky-d),var(--sky));
+  border-radius:14px;display:flex;align-items:center;justify-content:center;
+  color:white;font-size:20px;
+  box-shadow:0 4px 16px rgba(2,132,199,0.35);
+}
+.logo-text h1{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:var(--slate);line-height:1.2;}
+.logo-text p{font-size:12px;color:var(--slate-s);margin-top:1px;}
+
+h2{font-family:'Syne',sans-serif;font-weight:700;font-size:24px;color:var(--slate);margin-bottom:6px;}
+.subtitle{font-size:13.5px;color:var(--slate-s);margin-bottom:28px;}
+
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--slate-m);margin-bottom:6px;letter-spacing:0.02em;}
+.field input,.field select{
+  width:100%;padding:12px 14px;
+  border:1.5px solid var(--slate-x);
+  border-radius:12px;
+  font-family:'DM Sans',sans-serif;font-size:14px;color:var(--slate);
+  background:var(--white);outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.field input:focus,.field select:focus{
+  border-color:var(--sky);
+  box-shadow:0 0 0 3px rgba(2,132,199,0.12);
+}
+.field select{cursor:pointer;}
+
+.input-wrap{position:relative;}
+.input-wrap input{padding-right:44px;}
+.toggle-pw{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;color:var(--slate-s);font-size:15px;
+  transition:color 0.15s;
+}
+.toggle-pw:hover{color:var(--sky);}
+
+.error-msg{
+  font-size:12px;color:var(--red);
+  background:#FEF2F2;border:1px solid #FECACA;
+  border-radius:8px;padding:9px 12px;
+  margin-bottom:14px;display:none;align-items:center;gap:7px;
+}
+.error-msg.show{display:flex;}
+
+.btn-login{
+  width:100%;padding:14px;
+  background:linear-gradient(135deg,var(--sky-d),var(--sky));
+  color:white;border:none;border-radius:12px;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:15px;
+  cursor:pointer;transition:all 0.2s;
+  box-shadow:0 4px 16px rgba(2,132,199,0.3);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:4px;
+}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(2,132,199,0.4);}
+.btn-login:active{transform:translateY(0);}
+.btn-login .spinner{display:none;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.6s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.divider{display:flex;align-items:center;gap:12px;margin:22px 0;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--slate-x);}
+.divider span{font-size:12px;color:var(--slate-s);}
+
+.quick-accounts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.quick-btn{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:14px 10px;
+  border:1.5px solid var(--slate-x);border-radius:12px;
+  background:var(--white);cursor:pointer;
+  transition:all 0.18s;font-family:'DM Sans',sans-serif;
+}
+.quick-btn:hover{border-color:var(--sky);background:var(--sky-xl);transform:translateY(-1px);}
+.quick-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;color:white;}
+.q-admin .quick-icon{background:linear-gradient(135deg,#0369A1,#0284C7);}
+.q-driver .quick-icon{background:linear-gradient(135deg,#065F46,#10B981);}
+.q-passenger .quick-icon{background:linear-gradient(135deg,#92400E,#F59E0B);}
+.quick-btn span{font-size:11px;font-weight:600;color:var(--slate-m);}
+.quick-btn small{font-size:10px;color:var(--slate-s);}
+
+footer{
+  position:fixed;bottom:16px;left:0;right:0;
+  text-align:center;font-size:11px;color:rgba(255,255,255,0.5);
+}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon"><i class="fas fa-route"></i></div>
+    <div class="logo-text">
+      <h1>Smart Mobility Hubs</h1>
+      <p>Zamboanga City · WMSU College of Engineering</p>
+    </div>
+  </div>
+
+  <h2>Welcome back</h2>
+  <p class="subtitle">Sign in to access your dashboard</p>
+
+  <div class="error-msg" id="err"><i class="fas fa-circle-exclamation"></i><span id="err-text">Invalid credentials.</span></div>
+
+  <div class="field">
+    <label>Email Address</label>
+    <input type="email" id="email" placeholder="you@mobility.gov.ph" autocomplete="email">
+  </div>
+  <div class="field">
+    <label>Password</label>
+    <div class="input-wrap">
+      <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+      <button class="toggle-pw" onclick="togglePw()" tabindex="-1"><i class="fas fa-eye" id="eye-icon"></i></button>
+    </div>
+  </div>
+
+  <button class="btn-login" id="login-btn" onclick="doLogin()">
+    <span class="spinner" id="spinner"></span>
+    <i class="fas fa-arrow-right-to-bracket" id="login-icon"></i>
+    <span id="login-text">Sign In</span>
+  </button>
+
+  <div class="divider"><span>or sign in as demo account</span></div>
+
+  <div class="quick-accounts">
+    <button class="quick-btn q-admin" onclick="quickLogin('admin')">
+      <div class="quick-icon"><i class="fas fa-shield-halved"></i></div>
+      <span>Admin</span>
+      <small>LGU Manager</small>
+    </button>
+    <button class="quick-btn q-driver" onclick="quickLogin('driver')">
+      <div class="quick-icon"><i class="fas fa-steering-wheel"></i></div>
+      <span>Driver</span>
+      <small>PUJ Operator</small>
+    </button>
+    <button class="quick-btn q-passenger" onclick="quickLogin('passenger')">
+      <div class="quick-icon"><i class="fas fa-user"></i></div>
+      <span>Passenger</span>
+      <small>Commuter</small>
+    </button>
+  </div>
+</div>
+
+<footer>© 2026 Strategic Smart Mobility Hubs · Technopreneurship WED Cluster 25-26</footer>
+
+<script>
+const accounts = {
+  'admin@mobility.gov.ph':    { pw:'admin123',   role:'admin' },
+  'driver@mobility.gov.ph':   { pw:'driver123',  role:'driver' },
+  'passenger@mobility.gov.ph':{ pw:'pass123',    role:'passenger' }
+};
+
+function togglePw(){
+  const inp=document.getElementById('password');
+  const ico=document.getElementById('eye-icon');
+  if(inp.type==='password'){inp.type='text';ico.className='fas fa-eye-slash';}
+  else{inp.type='password';ico.className='fas fa-eye';}
+}
+
+function showError(msg){
+  const e=document.getElementById('err');
+  document.getElementById('err-text').textContent=msg;
+  e.classList.add('show');
+  setTimeout(()=>e.classList.remove('show'),3500);
+}
+
+function doLogin(){
+  const email=document.getElementById('email').value.trim().toLowerCase();
+  const pw=document.getElementById('password').value;
+  if(!email||!pw){showError('Please enter your email and password.');return;}
+  setLoading(true);
+  setTimeout(()=>{
+    const acc=accounts[email];
+    if(acc && acc.pw===pw){navigate(acc.role);}
+    else{setLoading(false);showError('Invalid email or password. Try the demo accounts below.');}
+  },900);
+}
+
+function quickLogin(role){
+  setLoading(true);
+  setTimeout(()=>navigate(role),700);
+}
+
+function navigate(role){
+  window.location.href=role+'.html';
+}
+
+function setLoading(on){
+  document.getElementById('spinner').style.display=on?'block':'none';
+  document.getElementById('login-icon').style.display=on?'none':'';
+  document.getElementById('login-text').textContent=on?'Signing in…':'Sign In';
+  document.getElementById('login-btn').disabled=on;
+}
+
+document.getElementById('password').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+document.getElementById('email').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('password').focus();});
+</script>
+</body>
+</html>
