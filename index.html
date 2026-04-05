@@ -196,56 +196,68 @@ footer{
 <footer>© 2026 Strategic Smart Mobility Hubs · Technopreneurship WED Cluster 25-26</footer>
 
 <script>
-const accounts = {
-  'admin@mobility.gov.ph':    { pw:'admin123',   role:'admin' },
-  'driver@mobility.gov.ph':   { pw:'driver123',  role:'driver' },
-  'passenger@mobility.gov.ph':{ pw:'pass123',    role:'passenger' }
-};
-
 function togglePw(){
-  const inp=document.getElementById('password');
-  const ico=document.getElementById('eye-icon');
-  if(inp.type==='password'){inp.type='text';ico.className='fas fa-eye-slash';}
-  else{inp.type='password';ico.className='fas fa-eye';}
+  const inp = document.getElementById('password');
+  const ico = document.getElementById('eye-icon');
+  if(inp.type === 'password'){
+    inp.type = 'text';
+    ico.className = 'fas fa-eye-slash';
+  } else {
+    inp.type = 'password';
+    ico.className = 'fas fa-eye';
+  }
 }
 
 function showError(msg){
-  const e=document.getElementById('err');
-  document.getElementById('err-text').textContent=msg;
+  const e = document.getElementById('err');
+  document.getElementById('err-text').textContent = msg;
   e.classList.add('show');
-  setTimeout(()=>e.classList.remove('show'),3500);
-}
-
-function doLogin(){
-  const email=document.getElementById('email').value.trim().toLowerCase();
-  const pw=document.getElementById('password').value;
-  if(!email||!pw){showError('Please enter your email and password.');return;}
-  setLoading(true);
-  setTimeout(()=>{
-    const acc=accounts[email];
-    if(acc && acc.pw===pw){navigate(acc.role);}
-    else{setLoading(false);showError('Invalid email or password. Try the demo accounts below.');}
-  },900);
-}
-
-function quickLogin(role){
-  setLoading(true);
-  setTimeout(()=>navigate(role),700);
-}
-
-function navigate(role){
-  window.location.href=role+'.html';
+  setTimeout(() => e.classList.remove('show'), 3500);
 }
 
 function setLoading(on){
-  document.getElementById('spinner').style.display=on?'block':'none';
-  document.getElementById('login-icon').style.display=on?'none':'';
-  document.getElementById('login-text').textContent=on?'Signing in…':'Sign In';
-  document.getElementById('login-btn').disabled=on;
+  document.getElementById('spinner').style.display = on ? 'block' : 'none';
+  document.getElementById('login-icon').style.display = on ? 'none' : '';
+  document.getElementById('login-text').textContent = on ? 'Signing in…' : 'Sign In';
+  document.getElementById('login-btn').disabled = on;
 }
 
-document.getElementById('password').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-document.getElementById('email').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('password').focus();});
+function doLogin(){
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const pw = document.getElementById('password').value;
+  if(!email || !pw){
+    showError('Please enter your email and password.');
+    return;
+  }
+  setLoading(true);
+  setTimeout(() => {
+    // For manual login, you can keep the old logic or remove it
+    setLoading(false);
+    showError('Please use the demo quick login buttons below.');
+  }, 800);
+}
+
+// Updated Quick Login to use GitHub Pages links
+function quickLogin(role){
+  setLoading(true);
+  setTimeout(() => {
+    if(role === 'admin'){
+      window.location.href = 'https://haruyukiii.github.io/Admin/';
+    } else if(role === 'driver'){
+      window.location.href = 'https://haruyukiii.github.io/Driver/';
+    } else if(role === 'passenger'){
+      window.location.href = 'https://haruyukiii.github.io/Passenger/';
+    }
+  }, 700);
+}
+
+// Allow Enter key on password field
+document.getElementById('password').addEventListener('keydown', e => {
+  if(e.key === 'Enter') doLogin();
+});
+document.getElementById('email').addEventListener('keydown', e => {
+  if(e.key === 'Enter') document.getElementById('password').focus();
+});
 </script>
 </body>
 </html>
